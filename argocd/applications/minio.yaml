@@ -8,10 +8,24 @@ spec:
   source:
     repoURL: https://charts.bitnami.com/bitnami
     chart: minio
-    targetRevision: "*"
+    targetRevision: 15.0.7
     helm:
-      valueFiles:
-        - $values/argocd/values/minio-values.yaml
+      values: |
+        auth:
+          existingSecret: minio-credentials
+          rootUserSecretKey: rootUser
+          rootPasswordSecretKey: rootPassword
+
+        defaultBuckets: "mlflow-artifacts"
+
+        service:
+          type: ClusterIP
+          ports:
+            api: 9000
+            console: 9001
+
+        persistence:
+          enabled: false
   destination:
     server: https://kubernetes.default.svc
     namespace: mlflow
@@ -21,3 +35,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true

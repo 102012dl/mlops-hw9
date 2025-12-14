@@ -8,10 +8,24 @@ spec:
   source:
     repoURL: https://charts.bitnami.com/bitnami
     chart: postgresql
-    targetRevision: "*"
+    targetRevision: 15.5.32
     helm:
-      valueFiles:
-        - $values/argocd/values/postgres-values.yaml
+      values: |
+        auth:
+          username: "mlflow"
+          database: "mlflow"
+          existingSecret: postgres-credentials
+          secretKeys:
+            userPasswordKey: password
+
+        primary:
+          persistence:
+            enabled: false
+
+        service:
+          type: ClusterIP
+          ports:
+            postgresql: 5432
   destination:
     server: https://kubernetes.default.svc
     namespace: mlflow
@@ -21,3 +35,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
