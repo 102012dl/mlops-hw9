@@ -1,16 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mlflow
+  name: minio
   namespace: argocd
-  labels:
-    app.kubernetes.io/name: mlflow
 spec:
   project: default
   source:
-    repoURL: https://github.com/102012dl/mlops-hw9.git
-    targetRevision: lesson-8-9
-    path: experiments/mlflow
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: minio
+    targetRevision: "*"
+    helm:
+      valueFiles:
+        - $values/argocd/values/minio-values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: mlflow
@@ -20,6 +21,3 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - PrunePropagationPolicy=foreground
-      - PruneLast=true
-      - ApplyOutOfSyncOnly=true

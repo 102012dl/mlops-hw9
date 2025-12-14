@@ -1,0 +1,17 @@
+auth:
+  username: "mlflow"
+  password: "mlflow123"
+  database: "mlflow"
+
+primary:
+  persistence:
+    enabled: true
+    size: 5Gi
+
+service:
+  type: ClusterIP
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi

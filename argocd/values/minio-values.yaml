@@ -1,0 +1,21 @@
+mode: standalone
+
+auth:
+  rootUser: "minioadmin"
+  rootPassword: "minioadmin123"
+
+defaultBuckets: "mlflow-artifacts"
+
+service:
+  type: ClusterIP
+  ports:
+    api: 9000
+
+persistence:
+  enabled: true
+  size: 5Gi
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi

@@ -1,0 +1,8 @@
+service:
+  type: ClusterIP
+  port: 9091
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi

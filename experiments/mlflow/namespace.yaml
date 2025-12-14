@@ -3,5 +3,4 @@ kind: Namespace
 metadata:
   name: mlflow
   labels:
-    app.kubernetes.io/name: mlflow
     app.kubernetes.io/managed-by: argocd
